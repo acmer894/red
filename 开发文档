@@ -1,0 +1,446 @@
+# 湖南革命纪念地旅游网站开发文档
+
+## 1. 项目概述
+
+### 1.1 项目背景
+湖南是中国革命的摇篮之一，拥有丰富的革命历史文化遗产。本项目旨在通过现代化的网络平台，向公众展示湖南的革命纪念地，传播革命历史，弘扬革命精神，促进红色旅游发展。
+
+### 1.2 项目目标
+- 展示湖南革命纪念地的详细信息
+- 提供革命历史故事和照片展示
+- 为用户提供便捷的红色旅游信息查询服务
+- 弘扬革命精神，传承红色基因
+
+## 2. 技术架构
+
+### 2.1 前端技术栈
+- **框架**：React 18
+- **UI组件库**：Ant Design 5
+- **样式解决方案**：Styled Components
+- **路由管理**：React Router 6
+- **构建工具**：Vite
+- **开发语言**：TypeScript
+
+### 2.2 项目结构
+```
+src/
+├── components/       # 通用组件
+├── pages/            # 页面组件
+│   ├── Home.tsx      # 首页
+│   └── AttractionDetail.tsx  # 景点详情页
+├── assets/           # 静态资源
+├── App.tsx           # 应用主组件
+└── main.tsx          # 入口文件
+```
+
+## 3. 功能模块
+
+### 3.1 首页模块
+- **景点列表展示**：以卡片形式展示湖南革命纪念地
+- **景点信息**：包含名称、位置、简介等基本信息
+- **交互功能**：卡片悬停效果，点击进入详情页
+
+### 3.2 景点详情模块
+- **基本信息展示**：景点名称、位置、简介
+- **革命故事**：展示与景点相关的革命历史故事
+- **照片展示**：展示景点的多张照片
+- **导航功能**：返回首页
+
+### 3.3 导航模块
+- **顶部导航栏**：提供网站主要功能的导航
+- **响应式设计**：适配不同屏幕尺寸
+
+## 4. 数据结构
+
+### 4.1 景点数据结构
+```typescript
+interface Attraction {
+  id: number;
+  name: string;
+  location: string;
+  description: string;
+  image: string;
+  story: string;
+  photos: string[];
+  category: string; // 新增：景点分类
+}
+```
+
+### 4.2 示例数据
+```typescript
+const attractions = [
+  // 一、毛泽东相关纪念地
+  {
+    id: 1,
+    name: '韶山毛泽东故居',
+    location: '湖南省湘潭市韶山市',
+    description: '毛泽东同志的出生地和成长地，是中国革命的圣地之一。',
+    image: 'https://example.com/mao-zedong.jpg',
+    story: '毛泽东同志在这里度过了他的童年和少年时期。故居建于1878年，是一座典型的湖南农村民居。在这里，毛泽东同志接受了启蒙教育，开始了他追求真理、探索救国救民道路的历程。',
+    photos: [
+      'https://example.com/mao-1.jpg',
+      'https://example.com/mao-2.jpg',
+      'https://example.com/mao-3.jpg'
+    ],
+    category: '毛泽东相关纪念地'
+  },
+  {
+    id: 2,
+    name: '湖南第一师范',
+    location: '湖南省长沙市天心区',
+    description: '毛泽东青年时期求学地，被誉为"革命的摇篮"。',
+    image: 'https://example.com/first-normal.jpg',
+    story: '湖南第一师范是毛泽东青年时期求学的地方，校内保留了他的学习旧址和革命活动展览。这里培养了毛泽东的革命思想，为他日后的革命活动奠定了基础。',
+    photos: [
+      'https://example.com/first-normal-1.jpg',
+      'https://example.com/first-normal-2.jpg',
+      'https://example.com/first-normal-3.jpg'
+    ],
+    category: '毛泽东相关纪念地'
+  },
+  {
+    id: 3,
+    name: '橘子洲头',
+    location: '湖南省长沙市岳麓区',
+    description: '毛泽东青年时代常游之地，建有巨型毛泽东青年艺术雕塑。',
+    image: 'https://example.com/orange-isle.jpg',
+    story: '橘子洲头是毛泽东青年时代常游之地，这里建有巨型毛泽东青年艺术雕塑，刻有《沁园春·长沙》词碑。这里见证了毛泽东青年时期的革命理想和抱负。',
+    photos: [
+      'https://example.com/orange-isle-1.jpg',
+      'https://example.com/orange-isle-2.jpg',
+      'https://example.com/orange-isle-3.jpg'
+    ],
+    category: '毛泽东相关纪念地'
+  },
+  
+  // 二、重要起义与会议旧址
+  {
+    id: 4,
+    name: '秋收起义文家市会师纪念馆',
+    location: '湖南省浏阳市文家市镇',
+    description: '1927年秋收起义部队会师地，标志着中国革命从城市转向农村的转折点。',
+    image: 'https://example.com/autumn-uprising.jpg',
+    story: '1927年秋收起义部队在此会师，标志着中国革命从城市转向农村的转折点。这里见证了毛泽东同志"农村包围城市"革命道路的形成。',
+    photos: [
+      'https://example.com/autumn-uprising-1.jpg',
+      'https://example.com/autumn-uprising-2.jpg',
+      'https://example.com/autumn-uprising-3.jpg'
+    ],
+    category: '重要起义与会议旧址'
+  },
+  {
+    id: 5,
+    name: '平江起义纪念馆',
+    location: '湖南省岳阳市平江县',
+    description: '1928年彭德怀、滕代远领导的平江起义旧址，现为全国重点文物保护单位。',
+    image: 'https://example.com/pingjiang-uprising.jpg',
+    story: '1928年彭德怀、滕代远在此领导平江起义，建立了平江工农兵苏维埃政府，是湘鄂赣革命根据地的重要组成部分。',
+    photos: [
+      'https://example.com/pingjiang-1.jpg',
+      'https://example.com/pingjiang-2.jpg',
+      'https://example.com/pingjiang-3.jpg'
+    ],
+    category: '重要起义与会议旧址'
+  },
+  {
+    id: 6,
+    name: '通道转兵纪念馆',
+    location: '湖南省怀化市通道县',
+    description: '1934年红军长征途经通道时的"通道会议"旧址，挽救了红军命运的重要决策地。',
+    image: 'https://example.com/tongdao.jpg',
+    story: '1934年红军长征途经通道时，在此召开"通道会议"，决定放弃原定计划，转向贵州，这一决策挽救了红军命运，是长征中的重要转折点。',
+    photos: [
+      'https://example.com/tongdao-1.jpg',
+      'https://example.com/tongdao-2.jpg',
+      'https://example.com/tongdao-3.jpg'
+    ],
+    category: '重要起义与会议旧址'
+  },
+  
+  // 三、革命领袖故里
+  {
+    id: 7,
+    name: '刘少奇故居',
+    location: '湖南省宁乡市花明楼镇',
+    description: '刘少奇出生地，包括故居、纪念馆和铜像广场，与韶山、彭德怀故居构成"红三角"。',
+    image: 'https://example.com/liu-shaoqi.jpg',
+    story: '刘少奇同志在此出生并度过了他的童年和少年时期。故居及纪念馆展示了刘少奇同志的革命生涯和为中国革命事业作出的重要贡献。',
+    photos: [
+      'https://example.com/liu-shaoqi-1.jpg',
+      'https://example.com/liu-shaoqi-2.jpg',
+      'https://example.com/liu-shaoqi-3.jpg'
+    ],
+    category: '革命领袖故里'
+  },
+  {
+    id: 8,
+    name: '彭德怀故居',
+    location: '湖南省湘潭市乌石镇',
+    description: '彭德怀元帅的出生地及纪念馆，展示其革命生涯和军事贡献。',
+    image: 'https://example.com/peng-dehuai.jpg',
+    story: '彭德怀元帅在此出生并度过了他的童年和少年时期。故居及纪念馆展示了彭德怀元帅的革命生涯和军事贡献，以及他为中国革命和建设事业作出的重要贡献。',
+    photos: [
+      'https://example.com/peng-dehuai-1.jpg',
+      'https://example.com/peng-dehuai-2.jpg',
+      'https://example.com/peng-dehuai-3.jpg'
+    ],
+    category: '革命领袖故里'
+  },
+  {
+    id: 9,
+    name: '贺龙故居',
+    location: '湖南省张家界市桑植县',
+    description: '贺龙元帅的故乡，故居及纪念馆陈列其领导南昌起义、创建红二军团的事迹。',
+    image: 'https://example.com/he-long.jpg',
+    story: '贺龙元帅在此出生并度过了他的童年和少年时期。故居及纪念馆展示了贺龙元帅的革命生涯，特别是他领导南昌起义、创建红二军团的事迹。',
+    photos: [
+      'https://example.com/he-long-1.jpg',
+      'https://example.com/he-long-2.jpg',
+      'https://example.com/he-long-3.jpg'
+    ],
+    category: '革命领袖故里'
+  },
+  
+  // 四、红军长征与抗战遗址
+  {
+    id: 10,
+    name: '湘江战役旧址',
+    location: '湖南省永州市道县、全州县交界',
+    description: '红军长征中惨烈的湘江战役发生地，道县建有烈士纪念园。',
+    image: 'https://example.com/xiangjiang-battle.jpg',
+    story: '1934年，红军长征途经此地时，与国民党军队在此展开了一场惨烈的战斗，史称"湘江战役"。这场战役是红军长征以来损失最为惨重的一战，道县建有烈士纪念园，纪念在此牺牲的革命先烈。',
+    photos: [
+      'https://example.com/xiangjiang-1.jpg',
+      'https://example.com/xiangjiang-2.jpg',
+      'https://example.com/xiangjiang-3.jpg'
+    ],
+    category: '红军长征与抗战遗址'
+  },
+  {
+    id: 11,
+    name: '炎陵县红军标语博物馆',
+    location: '湖南省株洲市炎陵县',
+    description: '保存了300多条红军标语，是全国唯一的红军标语专题博物馆。',
+    image: 'https://example.com/yanling-slogans.jpg',
+    story: '炎陵县红军标语博物馆保存了300多条红军标语，是全国唯一的红军标语专题博物馆。这些标语记录了红军在革命战争年代的宣传工作和革命理念。',
+    photos: [
+      'https://example.com/yanling-1.jpg',
+      'https://example.com/yanling-2.jpg',
+      'https://example.com/yanling-3.jpg'
+    ],
+    category: '红军长征与抗战遗址'
+  },
+  {
+    id: 12,
+    name: '汝城县沙洲村"半条被子"故事发生地',
+    location: '湖南省郴州市汝城县',
+    description: '长征途中红军与村民徐解秀"半条被子"故事的起源地，现为红色教育基地。',
+    image: 'https://example.com/half-quilt.jpg',
+    story: '1934年，红军长征途经汝城县沙洲村时，三位女红军借宿在村民徐解秀家中。临走时，她们将仅有的一条被子剪下一半留给徐解秀。这个"半条被子"的故事，生动诠释了共产党与人民群众的鱼水情深。',
+    photos: [
+      'https://example.com/half-quilt-1.jpg',
+      'https://example.com/half-quilt-2.jpg',
+      'https://example.com/half-quilt-3.jpg'
+    ],
+    category: '红军长征与抗战遗址'
+  },
+  
+  // 五、早期革命活动旧址
+  {
+    id: 13,
+    name: '中共湘区委员会旧址',
+    location: '湖南省长沙市开福区清水塘',
+    description: '毛泽东、杨开慧曾居住并领导湖南工农运动的地方，湖南最早的省级党组织所在地。',
+    image: 'https://example.com/hunan-committee.jpg',
+    story: '中共湘区委员会旧址是湖南最早的省级党组织所在地。毛泽东、杨开慧曾在此居住并领导湖南工农运动，这里见证了湖南早期革命活动的重要历史。',
+    photos: [
+      'https://example.com/hunan-committee-1.jpg',
+      'https://example.com/hunan-committee-2.jpg',
+      'https://example.com/hunan-committee-3.jpg'
+    ],
+    category: '早期革命活动旧址'
+  },
+  {
+    id: 14,
+    name: '湘南起义纪念馆',
+    location: '湖南省郴州市宜章县',
+    description: '1928年朱德、陈毅领导的湘南起义策源地，推动了井冈山会师。',
+    image: 'https://example.com/south-hunan-uprising.jpg',
+    story: '1928年，朱德、陈毅在此领导湘南起义，建立了湘南苏维埃政府，推动了井冈山会师。这里见证了湘南地区革命斗争的重要历史。',
+    photos: [
+      'https://example.com/south-hunan-1.jpg',
+      'https://example.com/south-hunan-2.jpg',
+      'https://example.com/south-hunan-3.jpg'
+    ],
+    category: '早期革命活动旧址'
+  },
+  {
+    id: 15,
+    name: '茶陵县工农兵政府旧址',
+    location: '湖南省株洲市茶陵县',
+    description: '中国第一个县级红色政权诞生地（1927年），被誉为"井冈山革命根据地前奏"。',
+    image: 'https://example.com/chaling-government.jpg',
+    story: '1927年，茶陵县在此建立了中国第一个县级红色政权——茶陵县工农兵政府，被誉为"井冈山革命根据地前奏"。这里见证了早期红色政权的建立和发展。',
+    photos: [
+      'https://example.com/chaling-1.jpg',
+      'https://example.com/chaling-2.jpg',
+      'https://example.com/chaling-3.jpg'
+    ],
+    category: '早期革命活动旧址'
+  },
+  
+  // 六、烈士陵园与纪念馆
+  {
+    id: 16,
+    name: '湖南烈士公园',
+    location: '湖南省长沙市开福区',
+    description: '纪念近10万名湖南革命烈士，园内建有纪念塔和陈列馆。',
+    image: 'https://example.com/hunan-martyrs.jpg',
+    story: '湖南烈士公园是为纪念近10万名湖南革命烈士而建，园内建有纪念塔和陈列馆。这里安葬了许多为革命事业献身的烈士，是缅怀革命先烈的重要场所。',
+    photos: [
+      'https://example.com/hunan-martyrs-1.jpg',
+      'https://example.com/hunan-martyrs-2.jpg',
+      'https://example.com/hunan-martyrs-3.jpg'
+    ],
+    category: '烈士陵园与纪念馆'
+  },
+  {
+    id: 17,
+    name: '杨开慧故居',
+    location: '湖南省长沙市长沙县开慧镇',
+    description: '毛泽东夫人杨开慧的故居及纪念馆，展示其革命事迹。',
+    image: 'https://example.com/yang-kaihui.jpg',
+    story: '杨开慧同志是毛泽东同志的夫人，也是中国共产党的早期党员。故居及纪念馆展示了杨开慧同志的革命事迹，以及她为中国革命事业作出的重要贡献。',
+    photos: [
+      'https://example.com/yang-kaihui-1.jpg',
+      'https://example.com/yang-kaihui-2.jpg',
+      'https://example.com/yang-kaihui-3.jpg'
+    ],
+    category: '烈士陵园与纪念馆'
+  }
+];
+```
+
+## 5. 页面设计
+
+### 5.1 首页设计
+- **布局**：响应式网格布局
+- **配色**：以红色(#c41e3a)为主色调，象征革命精神
+- **交互**：卡片悬停效果，阴影变化
+
+### 5.2 详情页设计
+- **布局**：单列布局，顶部大图展示
+- **内容组织**：使用标签页分隔不同类型的内容
+- **图片展示**：网格布局展示多张照片
+
+## 6. 开发计划
+
+### 6.1 第一阶段：基础架构搭建
+- 项目初始化
+- 路由系统搭建
+- 基础组件开发
+
+### 6.2 第二阶段：核心功能开发
+- 首页开发
+- 详情页开发
+- 数据管理
+
+### 6.3 第三阶段：优化与完善
+- 响应式适配
+- 性能优化
+- 用户体验改进
+
+## 7. 部署方案
+
+### 7.1 构建配置
+```typescript
+// vite.config.ts
+export default defineConfig({
+  plugins: [react()],
+  resolve: {
+    alias: {
+      '@': path.resolve(__dirname, './src'),
+    },
+  },
+  server: {
+    port: 3000,
+    open: true,
+  },
+  build: {
+    outDir: 'dist',
+    sourcemap: true,
+  },
+});
+```
+
+### 7.2 部署步骤
+1. 执行构建命令：`npm run build`
+2. 将生成的`dist`目录部署到Web服务器
+3. 配置服务器路由，支持前端路由
+
+## 8. 后续扩展计划
+
+### 8.1 功能扩展
+- 用户评论系统
+- 景点地图导航
+- 旅游路线推荐
+- 在线预订功能
+
+### 8.2 技术扩展
+- 后端API集成
+- 数据库存储
+- 用户认证系统
+- 内容管理系统
+
+## 9. 维护计划
+
+### 9.1 日常维护
+- 定期更新景点信息
+- 修复bug和性能问题
+- 更新依赖包
+
+## 10. 项目团队
+
+### 10.1 角色分工
+- 前端开发工程师
+- UI/UX设计师
+- 内容编辑
+- 项目经理
+
+### 10.2 协作流程
+- 使用Git进行版本控制
+- 采用敏捷开发方法
+- 定期进行代码审查
+
+## 11. 项目时间线
+
+### 11.1 开发周期
+- 需求分析：1周
+- 设计阶段：2周
+- 开发阶段：4周
+- 测试阶段：2周
+- 部署上线：1周
+
+### 11.2 里程碑
+- M1：项目启动（第1周）
+- M2：设计完成（第3周）
+- M3：核心功能开发完成（第7周）
+- M4：测试完成（第9周）
+- M5：项目上线（第10周）
+
+## 13. 附录
+
+### 13.1 技术文档
+- React官方文档
+- Ant Design组件库文档
+- TypeScript文档
+- Vite构建工具文档
+
+### 13.2 参考资料
+- 湖南革命历史资料
+- 红色旅游发展报告
+- 用户体验设计指南
+
+---
+
+本开发文档提供了湖南革命纪念地旅游网站的整体规划和实现方案，可作为开发团队的指导文档。随着项目的推进，文档将不断更新和完善。
