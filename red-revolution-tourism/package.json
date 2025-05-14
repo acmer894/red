@@ -11,7 +11,7 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
-  "homepage": "https://acmer894.github.io/red-revolution-tourism",
+  "homepage": "https://acmer894.github.io/red",
   "dependencies": {
     "@ant-design/compatible": "^5.1.4",
     "@ant-design/icons": "^6.0.0",

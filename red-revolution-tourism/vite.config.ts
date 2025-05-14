@@ -9,5 +9,5 @@ export default defineConfig({
     open: true,
   },
   // 设置基本公共路径，用于GitHub Pages部署
-  base: '/red-revolution-tourism/',
+  base: '/red/',
 })
